@@ -7,19 +7,34 @@ public class LinkedList<E> implements ListEaaa<E> {
     Node<E> tail = null;
     @Override
     public void add(E e) {
+        Node node = new Node<E>(e);
         if(tail == null) {
-           tail = new Node<E>(e);
+           tail = node;
+           head = node;
         }
         else {
-            Node<E> n = new Node<E>(e);
-            tail.setNext(n);
-            tail = n;
+            tail.setNext(node);
+            tail = node;
         }
     }
 
     @Override
     public boolean remove(E e) {
-        return false;
+        boolean removed = false;
+        Node<E> node = head;
+        Node<E> prevNode = head;
+
+        while(node.getElement() != null && !removed) {
+            if(node.getElement().equals(e)) {
+                prevNode.setNext(node.getNext());
+                removed = true;
+            }
+            else {
+                prevNode = node;
+                node = node.getNext();
+            }
+        }
+        return removed;
     }
 
     @Override
